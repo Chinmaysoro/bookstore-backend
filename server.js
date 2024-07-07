@@ -10,16 +10,16 @@ import dotenv from 'dotenv';
 dotenv.config() //--dotenv
 
 
-var whitelist = ['https://bookstore-frontend-y2d7.onrender.com', 'http://localhost:5173', 'http://localhost:5174']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
+// var whitelist = ['https://bookstore-frontend-y2d7.onrender.com', 'http://localhost:5173', 'http://localhost:5174']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
 
 
 //--app config
@@ -28,7 +28,7 @@ const PORT = process.env.PORT || 4892;
 
 //--middleware
 app.use(express.json());  
-app.use(cors(corsOptions));
+app.use(cors());
 
 
 
@@ -43,10 +43,15 @@ app.get('/', (req, res) => {
     res.send('Book Store for Skill Academy!')
 });
 //--DataBase connection--
-connectDB()
-.then(()=>{
-    app.listen(PORT, () => {
+try {
+    connectDB()
+    .then(()=>{
+        app.listen(PORT, () => {
         console.log(`Server started on http://localhost:${PORT}`) 
     });
 })
+} catch (error) {
+    console.log(error)
+}
+
 

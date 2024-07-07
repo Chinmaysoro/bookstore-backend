@@ -1,9 +1,9 @@
 import express from 'express';
 import authMiddleware from '../middleware/auth.js';
 import { placeOrder, verifyOrder, userOrders, listOrders, updateStatus } from '../controllers/orderController.js';
-
+import cors from 'cors'
 const orderRouter = express.Router();
-
+orderRouter.use(cors())
 //--for client frontend--
 orderRouter.post('/place', authMiddleware, placeOrder);
 

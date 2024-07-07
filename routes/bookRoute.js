@@ -2,6 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import { addBook, listBook, removeBook } from '../controllers/bookController.js';
 import authMiddleware from '../middleware/auth.js';
+import cors from 'cors'
 
 const bookRouter = express.Router();
 
@@ -14,6 +15,7 @@ const storage = multer.diskStorage({
 }); 
 
 const upload = multer({storage:storage});
+bookRouter.use(cors());
 
 //--add Books--
 bookRouter.post('/add', upload.single("image"), addBook);
